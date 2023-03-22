@@ -14,7 +14,6 @@ const Searchbar = ({onSubmit}) => {
         
         onSubmit(search.trim());
         setSearch('');
-
     }
 
     return (
