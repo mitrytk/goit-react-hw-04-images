@@ -26,6 +26,7 @@ const Modal = ({ closeModal, img }) => {
         window.addEventListener('keydown', handleKeyDown);
         console.log('mount');
         return () => window.removeEventListener('keydown', handleKeyDown);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return createPortal((

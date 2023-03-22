@@ -28,6 +28,7 @@ export const App = () => {
     }
 
     handleAPI(page);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, page]);
 
   const onSubmitForm = (state) => {
