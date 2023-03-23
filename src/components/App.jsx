@@ -27,8 +27,30 @@ export const App = () => {
       return;
     }
 
+    const handleAPI = (page) => {
+      setLoader(true);
+  
+      galleryApi
+        .fetchGallery(page, search)
+        .then(data => {
+          if (data.total === 0) {
+            setStatus('rejected');
+            setMessage('Nothing found for your request :(')
+            return;
+          }
+          
+          setGallery(prev => [ ...prev, ...data.hits]);
+          setStatus('resolved');
+          setShowBtn(page < Math.ceil(data.total / 12));
+        })
+        .catch(() => {
+          setStatus('rejected')
+          setMessage('Ooops... something went wrong :(')
+        })
+        .finally(() => setLoader(false))
+    }
+    
     handleAPI(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search, page]);
 
   const onSubmitForm = (state) => {
@@ -68,29 +90,6 @@ export const App = () => {
   const handleLoadMore = () => {
     setPage(prev => prev + 1);
   }
-
-  const handleAPI = (page) => {
-    setLoader(true);
-
-    galleryApi
-      .fetchGallery(page, search)
-      .then(data => {
-        if (data.total === 0) {
-          setStatus('rejected');
-          setMessage('Nothing found for your request :(')
-          return;
-        }
-        
-        setGallery(prev => [ ...prev, ...data.hits]);
-        setStatus('resolved');
-        setShowBtn(page < Math.ceil(data.total / 12));
-      })
-      .catch(() => {
-        setStatus('rejected')
-        setMessage('Ooops... something went wrong :(')
-      })
-      .finally(() => setLoader(false))
-}
 
 return (
   <>

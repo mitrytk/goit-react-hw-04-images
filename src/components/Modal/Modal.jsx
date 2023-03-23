@@ -7,13 +7,6 @@ import { createPortal } from "react-dom";
 const modalRoot = document.querySelector('#modal-root')
 
 const Modal = ({ closeModal, img }) => {
-    
-    const handleKeyDown = (e) => {
-
-        if (e.code === 'Escape') {
-            closeModal();
-        }
-    }
 
     const handleClick = (e) => {
 
@@ -23,11 +16,18 @@ const Modal = ({ closeModal, img }) => {
     }
 
     useEffect(() => {
+        const handleKeyDown = (e) => {
+
+            if (e.code === 'Escape') {
+                closeModal();
+            }
+        }
+
         window.addEventListener('keydown', handleKeyDown);
-        console.log('mount');
+        
         return () => window.removeEventListener('keydown', handleKeyDown);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+        
+    }, [closeModal])
 
     return createPortal((
         <div className={style.overlay} onClick={handleClick}>
